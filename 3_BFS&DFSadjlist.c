@@ -19,36 +19,57 @@ struct node * create(int data)
 
 
 
-void readgraph(int v)
-{  int i,n,k,val;
-   struct node *t;
-   i=0;
-  for(i=0;i<v;i++)
-  {  
-    printf("how many vertices adjacnet to vertex %d::",i);
-    scanf("%d",&n);
-    printf("how those nodes\n");
-    for(k=0;k<n;k++)
-    {  
-      scanf("%d",&val);
-      if(adj[i]==NULL)
-         {
-             adj[i]=create(val);
-             t=adj[i];
-         }
-         else{
-            t->next=create(val);
-            t=t->next;
-         }
+// void readgraph(int v)
+// {  int i,n,k,val;
+//    struct node *t;
+//    i=0;
+//   for(i=0;i<v;i++)
+//   {  
+//     printf("how many vertices adjacnet to vertex %d::",i);
+//     scanf("%d",&n);
+//     printf("how those nodes\n");
+//     for(k=0;k<n;k++)
+//     {  
+//       scanf("%d",&val);
+//       if(adj[i]==NULL)
+//          {
+//              adj[i]=create(val);
+//              t=adj[i];
+//          }
+//          else{
+//             t->next=create(val);
+//             t=t->next;
+//          }
 
 
-    }
+//     }
          
+//   }
+
+
+
+// }
+
+
+void addedge(int source,int dest)
+{
+  struct node *t;
+  t=adj[source];
+  if(t==NULL)
+  {
+    adj[source]=create(dest);
+  }
+  else{
+   while(t->next!=NULL)
+      t=t->next;
+   
+    t->next=create(dest);
   }
 
 
-
 }
+
+
 
 void printgraph(int v)
 {
@@ -130,7 +151,17 @@ int main()
    int visited[v];
   
 
-   readgraph(v);
+  //  readgraph(v);
+
+   addedge(0,1);
+   addedge(0,2);
+   addedge(0,3);
+   addedge(1,0);
+   addedge(1,2);
+   addedge(1,3);
+   addedge(2,3);
+   addedge(2,0);
+   addedge(3,0);
    printgraph(v);
    
    printf("BFS : ");
