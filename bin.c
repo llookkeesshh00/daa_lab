@@ -1,55 +1,51 @@
-#include<stdio.h>
-#include<stdio.h>
-int max, min;
-int a[100];
-void maxmin(int i, int j)
+#include <stdio.h>
+ 
+// A recursive binary search function. It returns location
+// of x in given array arr[l..r] if present, otherwise -1
+int binarySearch(int arr[], int l, int r, int x)
 {
- int max1, min1, mid;
- if(i==j)
- {
-  max = min = a[i];
- }
- else
- {
-  if(i == j-1)
-  {
-   if(a[i] <a[j])
-   {
-    max = a[j];
-    min = a[i];
-   }
-   else
-   {
-    max = a[i];
-    min = a[j];
-   }
-  }
-  else
-  {
-   mid = (i+j)/2;
-   maxmin(i, mid);
-   max1 = max; min1 = min;
-   maxmin(mid+1, j);
-   if(max <max1)
-    max = max1;
-   if(min > min1)
-    min = min1;
-  }
- }
+    // checking if there are elements in the subarray
+    if (l<=r) {
+ 
+        // calculating mid point
+        int mid = l + r/ 2;
+ 
+        // If the element is present at the middle itself
+        if (arr[mid] == x)
+            return mid;
+ 
+        // If element is smaller than mid, then it can only
+        // be present in left subarray
+        if (arr[mid] > x) {
+            return binarySearch(arr, l, mid - 1, x);
+        }
+ 
+        // Else the element can only be present in right
+        // subarray
+        return binarySearch(arr, mid + 1, r, x);
+    }
+ 
+    // We reach here when element is not present in array
+    return -1;
 }
-int main ()
+ 
+// driver code
+int main(void)
 {
- int i, num;
- printf ("\nEnter the total number of numbers : ");
- scanf ("%d",&num);
- printf ("Enter the numbers : \n");
- for (i=1;i<=num;i++)
-  scanf ("%d",&a[i]);
-
- max = a[0];
- min = a[0];
- maxmin(1, num);
- printf ("Minimum element in an array : %d\n", min);
- printf ("Maximum element in an array : %d\n", max);
- return 0;
+    // taking a sorted array
+    int arr[] = { 2, 3, 4, 10, 40 };
+    int size = sizeof(arr) / sizeof(arr[0]);
+   
+    int x = 10;
+  
+    int index = binarySearch(arr, 0, size - 1, x);
+ 
+    if (index == -1) {
+        printf("Element is not present in array");
+    }
+    else {
+        printf("Element is present at index %d", index);
+    }
+ 
+    return 0;
 }
