@@ -1,36 +1,55 @@
 #include<stdio.h>
-
-int binary_search(int A[], int key, int l,int h) {
-  
-  
-
-  while (l <= h) {
-    int mid = (l + h)/2;
-
-    if (A[mid] == key) {
-      return mid;
-    }
-
-    if (key < A[mid]) {
-      return binary_search(A,key,l,mid-1);
-    }
-    else {
-           return binary_search(A,key,mid+1,h);
-
-    }
+#include<stdio.h>
+int max, min;
+int a[100];
+void maxmin(int i, int j)
+{
+ int max1, min1, mid;
+ if(i==j)
+ {
+  max = min = a[i];
+ }
+ else
+ {
+  if(i == j-1)
+  {
+   if(a[i] <a[j])
+   {
+    max = a[j];
+    min = a[i];
+   }
+   else
+   {
+    max = a[i];
+    min = a[j];
+   }
   }
-  return -1;
+  else
+  {
+   mid = (i+j)/2;
+   maxmin(i, mid);
+   max1 = max; min1 = min;
+   maxmin(mid+1, j);
+   if(max <max1)
+    max = max1;
+   if(min > min1)
+    min = min1;
+  }
+ }
 }
+int main ()
+{
+ int i, num;
+ printf ("\nEnter the total number of numbers : ");
+ scanf ("%d",&num);
+ printf ("Enter the numbers : \n");
+ for (i=1;i<=num;i++)
+  scanf ("%d",&a[i]);
 
-int main() {
-  int a[10]={1,3,5,7,9,11,13,15,17,21};
-  int key = 39;
-
-  int position = binary_search(a, key, 0,9);
-  if (position == -1){
-    printf("Not found");
-    return 0;
-  }
-  printf("Found it at %d", position);
-  return 0;
+ max = a[0];
+ min = a[0];
+ maxmin(1, num);
+ printf ("Minimum element in an array : %d\n", min);
+ printf ("Maximum element in an array : %d\n", max);
+ return 0;
 }
